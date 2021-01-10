@@ -112,7 +112,7 @@ elif len(sys.argv)==3:
 
 elif len(sys.argv)==4:
 
-    for chapter in range(int(sys.argv[2]),int(sys.argv[3])):
+    for chapter in range(int(sys.argv[2])-1,int(sys.argv[3])+1):
         recent_link=iterate(sys.argv[1],chapter)
         main(recent_link,chapter)
 
