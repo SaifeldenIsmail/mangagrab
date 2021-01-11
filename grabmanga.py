@@ -66,7 +66,12 @@ def download_images(image_links,chapter):
 def convert_to_pdf(chapter_directory,chapter):
     image_list=os.listdir(chapter_directory)
     image_list.sort(key=lambda x: int(x[:-4]))
-    pdf=FPDF('P', 'mm', (250,353))
+    dimensions= PIL.Image.open(f'{chapter_directory}/{image_list[2]}').size
+    mmw=int(dimensions[0]/3.7795275591)
+    mmh=int(dimensions[1]/3.7795275591)
+    print(mmw)
+    print(mmh)
+    pdf=FPDF('P', 'mm', (mmw,mmh))
     pdf.set_auto_page_break(0)
     
     for image in image_list:
@@ -74,10 +79,10 @@ def convert_to_pdf(chapter_directory,chapter):
         image_dimensions=PIL.Image.open(image_directory).size
         if image_dimensions[0]<image_dimensions[1]:
             pdf.add_page()
-            pdf.image(name=image_directory, x = -0, y = -0, w =250 , h = 0, type = '', link = '')
+            pdf.image(name=image_directory, x = -0, y = -0, w =mmw , h = 0, type = '', link = '')
         else:
             pdf.add_page('L')
-            pdf.image(name=image_directory, x = 0, y = -0, w =353 , h = 0, type = '', link = '')
+            pdf.image(name=image_directory, x = 0, y = -0, w =mmh , h = 0, type = '', link = '')
     
     os.chdir(sys.argv[1])
     pdf.output(f'{sys.argv[1]}_chapter_{chapter}.pdf', 'F')
@@ -112,7 +117,7 @@ elif len(sys.argv)==3:
 
 elif len(sys.argv)==4:
 
-    for chapter in range(int(sys.argv[2])-1,int(sys.argv[3])+1):
+    for chapter in range(int(sys.argv[2]),int(sys.argv[3])+1):
         recent_link=iterate(sys.argv[1],chapter)
         main(recent_link,chapter)
 
