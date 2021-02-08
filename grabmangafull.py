@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from fpdf import FPDF
 from PIL import Image 
 
+
 def pick_option(options):
     for index, option in enumerate(options):
         print(f'{index}) {option.text}')
@@ -104,7 +105,6 @@ def main(recent_link,chapter):
     convert_to_pdf(chapter_directory,chapter)
 
 
-
 parser=argparse.ArgumentParser()
 
 parser.add_argument('--manga','-m',required=True)
@@ -116,7 +116,7 @@ group.add_argument('--recent','-r',action='store_true')
 
 args = parser.parse_args()
 
-
+# this is where the code is run
 if args.single:
 
     rec=query(args.manga)
